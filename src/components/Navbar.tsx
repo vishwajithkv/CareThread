@@ -1,4 +1,11 @@
-import { Users, LayoutDashboard, UserPlus, Users2, FileText, Bell } from "lucide-react";
+import {
+  Users,
+  LayoutDashboard,
+  UserPlus,
+  Users2,
+  FileText,
+  Bell,
+} from "lucide-react";
 import Button from "./Button";
 
 const navItems = [
@@ -6,11 +13,16 @@ const navItems = [
   { icon: <UserPlus size={20} />, text: "Add Patient", page: "add-patient" },
   { icon: <Users2 size={20} />, text: "Add Caretaker", page: "add-caretaker" },
   { icon: <FileText size={20} />, text: "Logs", page: "logs" },
-  { icon: <Bell size={20} />, text: "Alerts", page: "alerts" }
-]
+  { icon: <Bell size={20} />, text: "Alerts", page: "alerts" },
+];
 
-export default function Navbar({ activePage, setActivePage }: { activePage: string, setActivePage: (page: string) => void }) {
-
+export default function Navbar({
+  activePage,
+  setActivePage,
+}: {
+  activePage: string;
+  setActivePage: (page: string) => void;
+}) {
   return (
     <nav className="flex items-center gap-3 px-4 py-3 bg-white border-b border-gray-100 md:gap-4 md:px-6">
       <p className="flex items-center justify-center shrink-0 w-10 h-10 bg-blue-600 text-white rounded-xl">
@@ -22,7 +34,8 @@ export default function Navbar({ activePage, setActivePage }: { activePage: stri
       </p>
 
       {navItems.map((item, index) => (
-        <Button page={item.page}
+        <Button
+          page={item.page}
           text={item.text}
           icon={item.icon}
           index={index}
