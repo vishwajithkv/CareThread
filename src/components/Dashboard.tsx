@@ -2,11 +2,31 @@ import { useState } from "react";
 import { Check, ChevronDown, Clock, GrabIcon } from "lucide-react";
 import DashboardCard from "./DashboardCard";
 import { Avatar } from "./Avatar";
+import { LogCard } from "./LogCard";
 
 const patients = [
   { id: "margret", name: "Margaret Thompson", age: 78, showDot: true },
   { id: "robert", name: "Robert Chen", age: 82, showDot: false },
   { id: "dorothy", name: "Dorothy Martinez", age: 71, showDot: false },
+];
+
+const recentObservations = [
+  {
+    id: 1,
+    observation: "Sudden dizziness",
+    observer: "Sarah (nurse)",
+    note: "Patient reports feeling lightheaded and nauseous",
+    time: "2 hours ago",
+    severityLevel: "high",
+  },
+  {
+    id: 2,
+    observation: "Blood pressure 120/80",
+    observer: "John (patient)",
+    note: "No additional symptoms",
+    time: "4 hours ago",
+    severityLevel: "medium",
+  },
 ];
 
 export default function Dashboard() {
@@ -101,6 +121,18 @@ export default function Dashboard() {
       <div>
         <h2 className="text-xl font-bold text-gray-900 mb-4">
           Recent Observation
+          <div className="grid grid-cols-1 gap-4 mt-4">
+            {recentObservations.map((observation) => (
+              <LogCard
+                key={observation.id}
+                observation={observation.observation}
+                observer={observation.observer}
+                note={observation.note}
+                time={observation.time}
+                severityLevel={observation.severityLevel}
+              />
+            ))}
+          </div>
         </h2>
       </div>
     </div>

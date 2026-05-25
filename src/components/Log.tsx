@@ -1,7 +1,27 @@
 import { useState } from "react";
+import { LogCard } from "./LogCard";
 
 export default function Log() {
   const [severity, setSeverity] = useState(3);
+
+  const recentObservations = [
+    {
+      id: 1,
+      observation: "Sudden dizziness",
+      observer: "Sarah (nurse)",
+      note: "Patient reports feeling lightheaded and nauseous",
+      time: "2 hours ago",
+      severityLevel: "high",
+    },
+    {
+      id: 2,
+      observation: "Blood pressure 120/80",
+      observer: "John (patient)",
+      note: "No additional symptoms",
+      time: "4 hours ago",
+      severityLevel: "medium",
+    },
+  ];
 
   return (
     <div className="min-h-screen bg-gray-100 p-4 sm:p-6 lg:p-8">
@@ -92,9 +112,8 @@ export default function Log() {
                   value={severity}
                   onChange={(e) => setSeverity(Number(e.target.value))}
                   style={{
-                    background: `linear-gradient(to right, #3b82f6 ${
-                      ((severity - 1) / 4) * 100
-                    }%, #e5e7eb ${((severity - 1) / 4) * 100}%)`,
+                    background: `linear-gradient(to right, #3b82f6 ${((severity - 1) / 4) * 100
+                      }%, #e5e7eb ${((severity - 1) / 4) * 100}%)`,
                   }}
                   className="severity-slider"
                 />
@@ -121,6 +140,18 @@ export default function Log() {
           <h2 className="text-base font-semibold text-gray-800 mb-3">
             Recent Logs
           </h2>
+          <div className="grid grid-cols-1 gap-4 mt-4">
+            {recentObservations.map((observation) => (
+              <LogCard
+                key={observation.id}
+                observation={observation.observation}
+                observer={observation.observer}
+                note={observation.note}
+                time={observation.time}
+                severityLevel={observation.severityLevel}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </div>
