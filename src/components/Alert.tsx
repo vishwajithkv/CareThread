@@ -1,18 +1,71 @@
-import { Bell } from "lucide-react";
+import { useState } from "react";
+import AlertCard from "./AlertCard";
+
+const initialAlerts = [
+  {
+    id: 1,
+    activeAlert: true,
+    patientName: "Margaret Thompson",
+    pattern: "Dizziness + Blackout",
+    frequency: "4 times in 7 days",
+    notes: "Possible cardiovascular issue or medication side effect",
+    severity: "CRITICAL" as const,
+    detectedAt: "2 hours ago",
+  },
+  {
+    id: 2,
+    activeAlert: true,
+    patientName: "Margaret Thompson",
+    pattern: "Confusion episodes",
+    frequency: "3 times in 5 days",
+    notes: "Potential cognitive decline or medication interaction",
+    severity: "WARNING" as const,
+    detectedAt: "1 day ago",
+  },
+];
 
 export default function Alert() {
+  const [alerts, setAlerts] = useState(initialAlerts);
+
+  function acknowledge(id: number) {
+    setAlerts((prev) =>
+      prev.map((a) => (a.id === id ? { ...a, activeAlert: false } : a))
+    );
+  }
+
+  const activeAlerts = alerts.filter((a) => a.activeAlert);
+
   return (
     <div className="min-h-screen bg-gray-100 p-4 sm:p-6 lg:p-8">
       <h1 className="text-2xl font-bold text-gray-900 mb-1">Alerts</h1>
-      <p className="text-sm text-gray-500 mb-6">0 active alerts requiring attention</p>
-      <div className="bg-white rounded-xl border border-gray-200 shadow-sm w-full">
-        <div className="flex flex-col items-center justify-center py-16 px-4 text-center">
-          <Bell className="w-14 h-14 text-gray-300 mb-4" strokeWidth={1.5} />
-          <h2 className="text-base font-semibold text-gray-700">No active alerts.</h2>
-          <p className="text-sm text-gray-400 mt-1">All clear! The system will notify you when patterns are detected</p>
+      <p className="text-sm text-gray-500 mb-6">
+        {activeAlerts.length} active alerts requiring attention
+      </p>
+
+      {activeAlerts.length > 0 ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {activeAlerts.map((alert) => (
+            <AlertCard
+              key={alert.id}
+              activeAlert={alert.activeAlert}
+              patientName={alert.patientName}
+              pattern={alert.pattern}
+              frequency={alert.frequency}
+              notes={alert.notes}
+              severity={alert.severity}
+              detectedAt={alert.detectedAt}
+              onAcknowledge={() => acknowledge(alert.id)}
+            />
+          ))}
         </div>
-      </div>
+      ) : (
+        <AlertCard
+          activeAlert={false}
+          patientName=""
+          pattern=""
+          notes=""
+        />
+      )}
     </div>
   );
 }
-
